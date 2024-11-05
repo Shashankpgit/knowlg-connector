@@ -21,9 +21,11 @@
             <directory>${basedir}/src/main/resources</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>metadata.json</include>
-                <include>ui-config.json</include>
+                <include>*</include>
             </includes>
+            <excludes>
+                <exclude>connector.conf</exclude>
+            </excludes>
         </fileSet>
         <fileSet>
             <directory>target</directory>

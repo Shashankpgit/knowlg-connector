@@ -4,12 +4,16 @@
     "id": "sb-knowlg-connector",
     "name": "Sunbird Knowlg Connector",
     "type": "source",
+    "tenant": "single",
+    "version": "1.0.0",
+    "icon": "",
     "category": "Stream",
-    "description": "Pull data from a kafka source",
+    "description": "Pull data from a Sunbird Knowlg source",
     "technology": "scala",
+    "runtime": "flink",
     "licence": "MIT",
     "owner": "Sunbird",
-    "icon": "",
-    "mainClass": "org.sunbird.obsrv.connector.SBKnowlgConnector"
+    "main_class": "org.sunbird.obsrv.connector.SBKnowlgConnector",
+    "main_program": "sb-knowlg-connector-1.0.0.jar"
   }
 }
