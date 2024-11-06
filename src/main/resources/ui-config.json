@@ -8,14 +8,16 @@
       "title": "Kafka Brokers",
       "type": "string",
       "description": "Enter Kafka broker addresses in the format: broker1-hostname:port,broker2-hostname:port",
-      "helptext": "<p><strong>Kafka Broker Address Format:</strong> Enter the broker addresses in the following format:<code>&lt;broker1-hostname&gt;:&lt;port&gt;,&lt;broker2-hostname&gt;:&lt;port&gt;,&lt;broker3-hostname&gt;:&lt;port&gt;</code></p><p><em>Example:</em> <code>broker1.example.com:9092,broker2.example.com:9092,broker3.example.com:9092</code></p><p>Ensure each brokers hostname and port are correct, separated by commas.</p>"
+      "helptext": "<p><strong>Kafka Broker Address Format:</strong> Enter the broker addresses in the following format:<code>&lt;broker1-hostname&gt;:&lt;port&gt;,&lt;broker2-hostname&gt;:&lt;port&gt;,&lt;broker3-hostname&gt;:&lt;port&gt;</code></p><p><em>Example:</em> <code>broker1.example.com:9092,broker2.example.com:9092,broker3.example.com:9092</code></p><p>Ensure each brokers hostname and port are correct, separated by commas.</p>",
+      "uiIndex": 1
     },
     "source_kafka_topic": {
       "title": "Kafka Topic",
       "type": "string",
       "pattern": "^[a-zA-Z0-9\\\\._\\\\-]+$",
       "description": "Enter Kafka topic name. Only alphanumeric characters, dots, dashes, and underscores are allowed.",
-      "helptext": "<p>  <strong>Kafka Topic Name:</strong> Enter the name of the Kafka topic. Only alphanumeric characters (A-Z, 0-9), dots (<em>.</em>), dashes (<em>-</em>), and underscores (<em>_</em>) are allowed.</p><p>  <em>Example:</em> <em>example_topic-01</em></p><p>Ensure the topic name is clear and follows these character restrictions for compatibility with Kafka.</p>"
+      "helptext": "<p>  <strong>Kafka Topic Name:</strong> Enter the name of the Kafka topic. Only alphanumeric characters (A-Z, 0-9), dots (<em>.</em>), dashes (<em>-</em>), and underscores (<em>_</em>) are allowed.</p><p>  <em>Example:</em> <em>example_topic-01</em></p><p>Ensure the topic name is clear and follows these character restrictions for compatibility with Kafka.</p>",
+      "uiIndex": 2
     },
     "source_kafka_auto_offset_reset": {
       "title": "Kafka Auto Offset Reset",
@@ -27,7 +29,8 @@
         "latest",
         "none"
       ],
-      "default": "earliest"
+      "default": "earliest",
+      "uiIndex": 3
     },
     "source_kafka_consumer_id": {
       "title": "Kafka Consumer Id",
@@ -35,7 +38,8 @@
       "pattern": "^[a-zA-Z0-9\\\\._\\\\-]+$",
       "description": "Enter Kafka consumer group ID (e.g., my_consumer_group_01)",
       "helptext": "<p>  <strong>Kafka Consumer Group ID:</strong> Specify a unique identifier for the consumer group. This ID helps Kafka manage message consumption and track offsets across multiple consumers.</p><p>  <em>Note:</em> Choose a meaningful name for easy tracking, as consumers with the same group ID share messages.</p><p>  <em>Example:</em> <em>my_consumer_group_01</em></p>",
-      "default": "kafka-connector-group"
+      "default": "kafka-connector-group",
+      "uiIndex": 4
     }
   },
   "required": [
