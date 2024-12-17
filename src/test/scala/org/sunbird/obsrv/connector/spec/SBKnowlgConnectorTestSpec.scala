@@ -4,12 +4,12 @@ import io.github.embeddedkafka.{EmbeddedKafka, EmbeddedKafkaConfig}
 import org.scalatest.Matchers._
 import org.sunbird.obsrv.connector.fixtures.EventFixture
 import org.sunbird.obsrv.connector.source.IConnectorSource
-import org.sunbird.obsrv.connector.{BaseFlinkConnectorSpec, SBKnowlgConnectorSource}
+import org.sunbird.obsrv.connector.{BaseFlinkSourceConnectorSpec, SBKnowlgConnectorSource}
 
 import java.util
 import scala.collection.JavaConverters._
 
-class SBKnowlgConnectorTestSpec extends BaseFlinkConnectorSpec with Serializable {
+class SBKnowlgConnectorTestSpec extends BaseFlinkSourceConnectorSpec with Serializable {
 
   val customKafkaConsumerProperties: Map[String, String] = Map[String, String]("auto.offset.reset" -> "earliest", "group.id" -> "test-connector-group")
   implicit val embeddedKafkaConfig: EmbeddedKafkaConfig =
@@ -38,12 +38,12 @@ class SBKnowlgConnectorTestSpec extends BaseFlinkConnectorSpec with Serializable
 
   override def getConnectorName(): String = "SB-Knowlg-Connector"
 
-  override def getConnectorSource(): IConnectorSource = new SBKnowlgConnectorSource()
+  override def getConnector(): IConnectorSource = new SBKnowlgConnectorSource()
 
   override def testFailedEvents(events: util.List[String]): Unit = {
     events.asScala.size should be (1)
     Console.println("events.asScala.head", events.asScala.head)
-    events.asScala.head should be ("""{"error":{"error_code":"JSON_FORMAT_ERR","error_msg":"Not a valid json"},"event":"{\"data\":[{\"nodeUniqueId\":\"lex_auth_0133471820488704007\",","connector_ctx":{"connector_id":"sb-knowlg-connector","dataset_id":"d1","connector_instance_id":"c1","connector_type":"source","data_format":"json","entryTopic":"ingest","state":{},"stats":{}}}""")
+    events.asScala.head should be ("""{"error":{"error_code":"JSON_FORMAT_ERR","error_msg":"Not a valid json"},"event":"{\"data\":[{\"nodeUniqueId\":\"lex_auth_0133471820488704007\",","connector_ctx":{"connector_id":"sb-knowlg-connector","dataset_id":"d1","connector_instance_id":"c1","connector_type":"source","entryTopic":"ingest","state":{},"stats":{},"datasetTopic":"d1-events"}}""")
   }
 
   override def testSuccessEvents(events: util.List[String]): Unit = {
@@ -54,7 +54,7 @@ class SBKnowlgConnectorTestSpec extends BaseFlinkConnectorSpec with Serializable
 
   override def getConnectorConfigFile(): String = "test-config.json"
 
-  override def getSourceConfig(): Map[String, AnyRef] = {
+  override def getConnectorConfig(): Map[String, AnyRef] = {
     Map(
       "source_kafka_broker_servers" -> "localhost:9093",
       "source_kafka_consumer_id" -> "knowlg-connector",
@@ -64,4 +64,5 @@ class SBKnowlgConnectorTestSpec extends BaseFlinkConnectorSpec with Serializable
     )
   }
 
+  override def validateMetrics(metrics: Map[String, Long]): Unit = {}
 }
