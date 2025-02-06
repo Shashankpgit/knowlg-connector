@@ -6,7 +6,7 @@
     "type": "source",
     "tenant": "single",
     "version": "1.0.0",
-    "icon": "",
+    "icon": "knowlg.svg",
     "category": "Stream",
     "description": "Pull data from a Sunbird Knowlg source",
     "technology": "scala",
