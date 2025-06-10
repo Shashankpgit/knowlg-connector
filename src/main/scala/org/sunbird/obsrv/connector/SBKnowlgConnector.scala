@@ -11,6 +11,7 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.util.Collector
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, OffsetResetStrategy}
+import org.slf4j.LoggerFactory
 import org.sunbird.obsrv.connector.model.Models
 import org.sunbird.obsrv.connector.source.{IConnectorSource, SourceConnector, SourceConnectorFunction}
 import org.sunbird.obsrv.job.exception.UnsupportedDataFormatException
@@ -57,10 +58,16 @@ class SBKnowlgConnectorSource extends IConnectorSource {
 
 class StringDeserializationSchema extends KafkaRecordDeserializationSchema[String] {
   private val serialVersionUID = -3224825136576915426L
+  private[this] val logger = LoggerFactory.getLogger(this.getClass)
 
   override def getProducedType: TypeInformation[String] = TypeExtractor.getForClass(classOf[String])
 
   override def deserialize(record: ConsumerRecord[Array[Byte], Array[Byte]], out: Collector[String]): Unit = {
-    out.collect(new String(record.value(), StandardCharsets.UTF_8))
+    try {
+      out.collect(new String(record.value(), StandardCharsets.UTF_8))
+    } catch {
+      case ex: NullPointerException =>
+        logger.error(s"Exception while parsing the message: ${ex.getMessage}")
+    }
   }
 }
