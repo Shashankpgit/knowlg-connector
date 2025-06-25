@@ -50,7 +50,7 @@ jobs:
 
     - name: Rename distribution tarball
       run: |
-        cp target/knowlg-connector-*-distribution.tar.gz knowlg-connector.tar.gz
+        cp target/knowlg-connector-1.0.0-distribution.tar.gz knowlg-connector.tar.gz
 
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v2
