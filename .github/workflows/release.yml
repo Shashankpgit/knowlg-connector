@@ -50,11 +50,11 @@ jobs:
 
     - name: Rename distribution tarball
       run: |
-        cp target/knowlg-connector-1.0.0.jar knowlg-connector.jar
+        cp target/sb-knowlg-connector-1.0.0-distribution.tar.gz knowlg-connector.tar.gz
 
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v2
       with:
-        files: knowlg-connector.jar
+        files: knowlg-connector.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
