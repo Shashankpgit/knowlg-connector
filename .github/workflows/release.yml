@@ -32,14 +32,9 @@ jobs:
     - name: Inspect target/ directory
       run: ls -lh target/
 
-    - name: Prepare distribution directory
+    - name: Rename distribution tarball
       run: |
-        mkdir -p dist
-        cp -r target/knowlg-connector-*-distribution dist/
-        echo "Version: ${GITHUB_REF#refs/tags/}" > dist/knowlg-connector-*/VERSION.txt
-
-    - name: Create release tarball
-      run: tar -czvf knowlg-connector.tar.gz dist/
+        cp target/knowlg-connector-*-distribution.tar.gz knowlg-connector.tar.gz
 
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v2
