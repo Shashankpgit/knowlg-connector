@@ -1,0 +1,49 @@
+name: Release Knowlg Connector
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers workflow on tags like v1.0.0
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Knowlg Connector Code
+      uses: actions/checkout@v4
+
+    - name: Set up Java 11
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+
+    - name: Set up Maven
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        cache: 'maven'
+
+    - name: Build Knowlg Connector
+      run: mvn clean package -DskipTests
+
+    - name: Inspect target/ directory
+      run: ls -lh target/
+
+    - name: Prepare distribution directory
+      run: |
+        mkdir -p dist
+        cp -r target/knowlg-connector-*-distribution dist/
+        echo "Version: ${GITHUB_REF#refs/tags/}" > dist/knowlg-connector-*/VERSION.txt
+
+    - name: Create release tarball
+      run: tar -czvf knowlg-connector.tar.gz dist/
+
+    - name: Upload Release Asset
+      uses: softprops/action-gh-release@v2
+      with:
+        files: knowlg-connector.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
